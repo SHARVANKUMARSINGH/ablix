@@ -1,10 +1,10 @@
-
+import { useState } from "react";
 
 /**
  * Centralized icon abstraction.
  * - UiIcon: general interface icons via Font Awesome (loaded from CDN in index.html)
  * - FileIcon: file/language icons via vscode-icons CDN, keyed off filename/extension
- * - AppIcon: application icons (Ablix placeholder for now, easy to swap later)
+ * - AppIcon: application icons (real Ablix branding, still swappable in one place)
  *
  * No component in the app should reference a CDN URL or a raw <i className="fa-..."> directly.
  * Everything routes through here so sources can be swapped in one place later.
@@ -33,6 +33,8 @@ const FA_MAP: Record<string, string> = {
   eye: "fa-solid fa-eye",
   plug: "fa-solid fa-plug",
   download: "fa-solid fa-download",
+  expand: "fa-solid fa-expand",
+  compress: "fa-solid fa-compress",
   clock: "fa-regular fa-clock",
   fallback: "fa-regular fa-file-lines",
 };
@@ -128,11 +130,12 @@ export function FileIcon({
   );
 }
 
-/**
- * Application icon. Currently a temporary "A" placeholder tile — swap the `src`
- * (or the whole render body) here once final branding is supplied, without
- * touching any calling component.
- */
+// Real branding, centralized here so swapping it again later (a new mark, a
+// different app) never means touching DesktopIcon/Taskbar/AblixIDE directly.
+const APP_ICON_SRC: Record<"ablix", string> = {
+  ablix: "/assets/icon-192.png",
+};
+
 export function AppIcon({
   app,
   size = 40,
@@ -140,13 +143,31 @@ export function AppIcon({
   app: "ablix";
   size?: number;
 }) {
-  void app; // only one app for now; kept for future multi-app support
+  const [failed, setFailed] = useState(false);
+
+  if (failed) {
+    // Last-resort fallback if the asset ever fails to load — a letter tile,
+    // not an emoji, matching the "no emoji anywhere" rule.
+    return (
+      <div
+        className="app-icon-placeholder"
+        style={{ width: size, height: size, fontSize: size * 0.5 }}
+      >
+        A
+      </div>
+    );
+  }
+
   return (
-    <div
-      className="app-icon-placeholder"
-      style={{ width: size, height: size, fontSize: size * 0.5 }}
-    >
-      A
-    </div>
+    <img
+      src={APP_ICON_SRC[app]}
+      alt=""
+      width={size}
+      height={size}
+      draggable={false}
+      className="app-icon-image"
+      style={{ width: size, height: size }}
+      onError={() => setFailed(true)}
+    />
   );
 }

@@ -77,6 +77,11 @@ body,
   z-index: 5;
 }
 
+.app-icon-image {
+  border-radius: 22%;
+  display: block;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
 .app-icon-placeholder {
   display: flex;
   align-items: center;
@@ -266,10 +271,26 @@ body,
 .taskbar-system {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 10px;
   padding: 0 10px;
   font-size: 12px;
   color: var(--text-dim);
+}
+.taskbar-system-btn {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+}
+.taskbar-system-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
 }
 
 /* ---------- Ablix window ---------- */
@@ -292,6 +313,13 @@ body,
 }
 .ablix-window.minimized {
   display: none;
+}
+.ablix-window.maximized {
+  left: 0 !important;
+  top: 0 !important;
+  width: 100% !important;
+  height: calc(100% - var(--taskbar-h)) !important;
+  border-radius: 0;
 }
 .ablix-titlebar {
   height: 38px;
