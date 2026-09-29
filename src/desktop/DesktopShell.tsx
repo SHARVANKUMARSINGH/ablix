@@ -4,6 +4,7 @@ import { Desktop } from "./components/Desktop";
 import { Taskbar } from "./components/Taskbar";
 import { AblixIDE } from "./components/AblixIDE";
 import { useWindowManager } from "./useWindowManager";
+import { ExtensionOverlays } from "../extensions/ui/ExtensionOverlays";
 import { ProjectManager, type ProjectRecord } from "../project/ProjectManager";
 
 export function DesktopShell() {
@@ -36,6 +37,7 @@ export function DesktopShell() {
         onProjectChanged={setActiveProject}
       />
       <Taskbar ablix={ablix} onToggleAblix={toggleAblixFromTaskbar} />
+      <ExtensionOverlays />
     </div>
   );
 }

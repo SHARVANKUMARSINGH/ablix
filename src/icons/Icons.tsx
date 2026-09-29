@@ -36,8 +36,30 @@ const FA_MAP: Record<string, string> = {
   expand: "fa-solid fa-expand",
   compress: "fa-solid fa-compress",
   clock: "fa-regular fa-clock",
+  "puzzle-piece": "fa-solid fa-puzzle-piece",
+  package: "fa-solid fa-box",
+  wand: "fa-solid fa-wand-magic-sparkles",
+  list: "fa-solid fa-list",
+  bolt: "fa-solid fa-bolt",
+  star: "fa-solid fa-star",
+  bug: "fa-solid fa-bug",
+  code: "fa-solid fa-code",
+  palette: "fa-solid fa-palette",
+  wrench: "fa-solid fa-wrench",
+  book: "fa-solid fa-book",
+  bell: "fa-solid fa-bell",
+  command: "fa-solid fa-keyboard",
+  warning: "fa-solid fa-triangle-exclamation",
+  check: "fa-solid fa-check",
+  upload: "fa-solid fa-upload",
+  store: "fa-solid fa-store",
+  chart: "fa-solid fa-chart-simple",
+  note: "fa-solid fa-note-sticky",
+  globe: "fa-solid fa-globe",
   fallback: "fa-regular fa-file-lines",
 };
+
+export const hasUiIcon = (name: string) => name in FA_MAP;
 
 export function UiIcon({
   name,

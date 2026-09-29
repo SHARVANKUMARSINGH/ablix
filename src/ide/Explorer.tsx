@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { FileIcon, UiIcon } from "../icons/Icons";
-import { ContextMenu, type ContextMenuState } from "../desktop/components/ContextMenu";
+import { ContextMenu, type ContextMenuItem, type ContextMenuState } from "../desktop/components/ContextMenu";
 import { PromptDialog, ConfirmDialog } from "../desktop/components/Dialogs";
 import { buildFileTree, type ProjectFile, type TreeNode } from "../project/ProjectManager";
 
@@ -71,6 +71,7 @@ export function Explorer({
   onCreateFolder,
   onRename,
   onDelete,
+  extraMenuItems,
 }: {
   files: ProjectFile[];
   activePath: string | null;
@@ -79,6 +80,7 @@ export function Explorer({
   onCreateFolder: (path: string) => void;
   onRename: (oldPath: string, newPath: string) => void;
   onDelete: (path: string, isFolder: boolean) => void;
+  extraMenuItems?: (node: TreeNode | null) => ContextMenuItem[];
 }) {
   const tree = useMemo(() => filterKeep(buildFileTree(files)), [files]);
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
@@ -105,6 +107,7 @@ export function Explorer({
         items: [
           { label: "New File", icon: "new-file", onSelect: () => setCreating({ kind: "file", base }) },
           { label: "New Folder", icon: "new-folder", onSelect: () => setCreating({ kind: "folder", base }) },
+          ...(extraMenuItems?.(null) ?? []),
         ],
       });
       return;
@@ -128,6 +131,7 @@ export function Explorer({
             ]
           : []),
         { label: "Rename", icon: "rename", onSelect: () => setRenaming(node) },
+        ...(extraMenuItems?.(node) ?? []),
         { label: "Delete", icon: "trash", danger: true, onSelect: () => setDeleting(node) },
       ],
     });

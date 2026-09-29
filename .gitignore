@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Appwrite credentials (local only; .env.example is the template)
+.env
